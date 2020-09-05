@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "movie-api-frontend"
+    }
+  },
+  "defaultProject": "movie-api-frontend",
+  "cli": {
+    "analytics": false
+  }
 }
