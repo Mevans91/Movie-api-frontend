@@ -10,8 +10,8 @@ import { MustMatch } from './must-match.validator';
 export class SignupComponent implements OnInit, OnDestroy {
   form: FormGroup
   formValues: any
-  submitting: false
-  hasError: false
+  submitting = false
+  hasError = false
   errorMsg: string
   constructor(
     private fb: FormBuilder
