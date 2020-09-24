@@ -12,12 +12,14 @@ import {
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './home/home.component'
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MovieCardComponent } from './home/movie-card/movie-card.component';
 import { SignupComponent } from './signup/signup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from './shared/services/user.service';
-import { LocalStorageService } from './shared/services/local-storage.service'
+import { LocalStorageService } from './shared/services/local-storage.service';
+import { LoginComponent } from './login/login.component';
+import { AuthorizationHeaderService } from './shared/services/authorization-header.service'
 
 
 @NgModule({
@@ -27,7 +29,8 @@ import { LocalStorageService } from './shared/services/local-storage.service'
     FooterComponent,
     HomeComponent,
     MovieCardComponent,
-    SignupComponent
+    SignupComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +44,10 @@ import { LocalStorageService } from './shared/services/local-storage.service'
   providers: [
     MovieService,
     UserService,
-    LocalStorageService
+    LocalStorageService,
+    { provide: HTTP_INTERCEPTORS,
+    useClass: AuthorizationHeaderService,
+    multi: true }
   ],
   bootstrap: [AppComponent]
 })

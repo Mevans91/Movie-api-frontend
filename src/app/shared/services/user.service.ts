@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { User } from './../models/user'
 import { LocalStorageService } from './local-storage.service';
 import { catchError, map } from 'rxjs/operators'
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -15,14 +16,15 @@ export class UserService {
   private userApi: string
   constructor(
     private http: HttpClient,
-    private storage: LocalStorageService
+    private storage: LocalStorageService,
+    private router: Router
   ) {
     this.userApi = `${environment.apiUrl}api/v1/users`
     this.currentUserSubject = new BehaviorSubject<User>(this.storage.getItem('currentUser'))
     this.currentUser = this.currentUserSubject.asObservable()
   }
 
-   public get currentuservalue(): User {
+   public get currentUserValue(): User {
      return this.currentUserSubject.value // returns the currentUser value to a component
    }
 
@@ -30,7 +32,21 @@ export class UserService {
      this.currentUserSubject.next(user) // sets the currentUsersubject
    }
 
-   login() {}
+   login(params) {
+     return this.http.post<any>(`${this.userApi}/login`, params)
+     .pipe(
+       catchError(this.handleError),
+       map(res => {
+        if (res && res.token) {
+          const newUser = new User(res)
+          this.storage.setItem('accessToken', res.token)
+          this.storage.setItem('currentUser', newUser)
+          this.currentUserSubject.next(newUser)
+          return { success: true, user: newUser }
+       }
+      })
+     )
+   }
 
    signup(params) {
     return this.http.post<any>(`${this.userApi}/create`, params)
@@ -48,7 +64,32 @@ export class UserService {
     )
    }
 
-   logout() {}
+   logoutUser() {
+    this.logout().subscribe(data => {
+      //logout was successful
+      if (data) {
+        this.removeCurrentUserAndRoute()
+      }
+    }, error => {
+      if (error) {
+        this.removeCurrentUserAndRoute()
+      }
+    })
+   }
+
+   logout() {
+     return this.http.delete<any>(`${this.userApi}/logout`, {})
+   }
+
+   removeCurrentUserAndRoute() {
+     // set the local storage vars as undefined, remove, and then route back to login
+     this.storage.setItem('currentUser', undefined)
+     this.storage.setItem('accessToken', undefined)
+     this.currentUserSubject.next(null)
+     this.storage.removeItem('currentUser')
+     this.storage.removeItem('accessToken')
+     this.router.navigate(['/login'])
+   }
 
    handleError(error) {
     let returnError
