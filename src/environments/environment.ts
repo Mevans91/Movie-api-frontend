@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://codelabs-movie-api.herokuapp.com/'
+  // apiUrl: 'https://codelabs-movie-api.herokuapp.com/'
+  apiUrl: 'https://memovieapi.herokuapp.com/'
 };
 
 /*
