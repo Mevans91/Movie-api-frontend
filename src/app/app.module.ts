@@ -19,7 +19,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from './shared/services/user.service';
 import { LocalStorageService } from './shared/services/local-storage.service';
 import { LoginComponent } from './login/login.component';
-import { AuthorizationHeaderService } from './shared/services/authorization-header.service'
+import { AuthorizationHeaderService } from './shared/services/authorization-header.service';
+import { SingleMovieComponent } from './movies/single-movie/single-movie.component';
+import { InputStarRatingComponent } from './movies/input-star-rating/input-star-rating.component'
 
 
 @NgModule({
@@ -30,7 +32,9 @@ import { AuthorizationHeaderService } from './shared/services/authorization-head
     HomeComponent,
     MovieCardComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    SingleMovieComponent,
+    InputStarRatingComponent
   ],
   imports: [
     BrowserModule,
