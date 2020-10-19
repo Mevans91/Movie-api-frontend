@@ -3,7 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { MovieReviewsComponent } from './movies/movie-reviews/movie-reviews.component';
+import { NewMovieComponent } from './movies/new-movie/new-movie.component';
 import { SingleMovieComponent } from './movies/single-movie/single-movie.component';
+import { AddEditReviewComponent } from './reviews/add-edit-review/add-edit-review.component';
 import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
@@ -28,6 +30,11 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'movies/new',
+    component: NewMovieComponent,
+    pathMatch: 'full'
+  },
+  {
     path: 'movies/:id',
     component: SingleMovieComponent,
     pathMatch: 'full'
@@ -35,6 +42,11 @@ const routes: Routes = [
   {
     path: 'movies/:id/reviews',
     component: MovieReviewsComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'reviews/:id/new',
+    component: AddEditReviewComponent,
     pathMatch: 'full'
   }
 ];

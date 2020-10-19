@@ -19,10 +19,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
    }
 
   ngOnInit(): void {
-    this.subscriceToCurrentUser()
+    this.subscribeToCurrentUser()
   }
 
-  subscriceToCurrentUser() {
+  subscribeToCurrentUser() {
      this.subs.add( //creates a new subscription
       this.userService.currentUser.subscribe(user => { //creates the subscription to our currentUser
         if (user) { //checks to see if the logged in user exists
